@@ -123,7 +123,7 @@ public class Main {
 
             final long startTime = System.currentTimeMillis();
 
-            final byte[] patternBytes = stringPattern.getBytes(characterSet);
+            final byte[] patternBytes = stringPattern.getBytes(characterSet); //wyszukiwana fraza na bajty
 
             // Algorithm selection
             TaskExecutor<FileSearchBean> taskExecutor;
