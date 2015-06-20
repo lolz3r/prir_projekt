@@ -1,8 +1,3 @@
-/*
- * Copyright 2011 Andrew Porokhin. All rights reserved.
- * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
- */
-
 
 
 import executor.TaskAcceptor;
@@ -118,6 +113,7 @@ public class Main {
 
             final TaskAcceptor<FileSearchBean> reporter = new TaskAcceptor<FileSearchBean>() {
                 public void push(FileSearchBean task) {
+                	//pokazywanie wyników wyszukiwania:
                     System.out.println(task.getInputFile().toString());
                 }
 
