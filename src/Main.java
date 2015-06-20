@@ -95,7 +95,7 @@ public class Main {
 
         if (args.length - argumentsIndex > 1) {
             final File rootDirectory = new File(args[argumentsIndex]);
-            final String stringPattern = args[argumentsIndex + 1];
+            final String fraza = args[argumentsIndex + 1];
 
             if (!rootDirectory.exists()) {
                 throw new FileNotFoundException(rootDirectory + " not found");
@@ -123,17 +123,17 @@ public class Main {
 
             final long startTime = System.currentTimeMillis();
 
-            final byte[] patternBytes = stringPattern.getBytes(characterSet); //wyszukiwana fraza na bajty
+			final byte[] frazabytes = fraza.getBytes(characterSet); //wyszukiwana fraza na bajty
 
             // Algorithm selection
             TaskExecutor<FileSearchBean> taskExecutor;
             if (useNaive) {
-                taskExecutor = new NaiveFileSearchTaskExecutor(patternBytes, reporter, bufferSize);
+                taskExecutor = new NaiveFileSearchTaskExecutor(frazabytes, reporter, bufferSize);
             } else if (useFastNIO) {
-                taskExecutor = new KMPFileSearchTaskExecutorNIO(patternBytes, reporter, bufferSize);
+                taskExecutor = new KMPFileSearchTaskExecutorNIO(frazabytes, reporter, bufferSize);
             } else {
             	//domyœlnie algorytm KMP
-                taskExecutor = new KMPFileSearchTaskExecutor(patternBytes, reporter, bufferSize);
+                taskExecutor = new KMPFileSearchTaskExecutor(frazabytes, reporter, bufferSize);
             }
 
             // wykonanie wielow¹tkowe

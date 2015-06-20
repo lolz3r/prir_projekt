@@ -8,7 +8,7 @@ public interface TaskAcceptor<T> {
     /**
      * Push new task.
      *
-     * @param task Task (can't be nul).
+     * @param task Task (can't be null!).
      * @throws IllegalArgumentException if argument if null
      * @throws InterruptedException if thread interrupted during execution
      */

@@ -17,34 +17,34 @@ import java.io.IOException;
  */
 public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
     public static final int DEFAULT_BUFFER_SIZE = 8192;
-    private final byte[] patternBytes;
+    private final byte[] frazab;
     private final int[] kmpNext;
     private final int bufferSize;
     private final TaskAcceptor<FileSearchBean> resultCollector;
 
-    public KMPFileSearchTaskExecutor(byte[] patternBytes, TaskAcceptor<FileSearchBean> resultCollector) {
-        this(patternBytes, resultCollector, DEFAULT_BUFFER_SIZE);
+    public KMPFileSearchTaskExecutor(byte[] frazab, TaskAcceptor<FileSearchBean> resultCollector) {
+        this(frazab, resultCollector, DEFAULT_BUFFER_SIZE);
     }
 
-    public KMPFileSearchTaskExecutor(byte[] patternBytes, TaskAcceptor<FileSearchBean> resultCollector, int bufferSize) {
+    public KMPFileSearchTaskExecutor(byte[] frazab, TaskAcceptor<FileSearchBean> resultCollector, int bufferSize) {
         this.resultCollector = resultCollector;
-        this.patternBytes = patternBytes;
+        this.frazab = frazab;
         this.bufferSize = bufferSize;
 
-        this.kmpNext = new int[patternBytes.length];
+        this.kmpNext = new int[frazab.length];
 
         // Pre-compute
         int j = -1;
-        for (int i = 0; i < patternBytes.length; i++) {
+        for (int i = 0; i < frazab.length; i++) {
             if (i == 0) {
                 kmpNext[i] = -1;
-            } else if (patternBytes[i] != patternBytes[j]) {
+            } else if (frazab[i] != frazab[j]) {
                 kmpNext[i] = j;
             } else {
                 kmpNext[i] = kmpNext[j];
             }
 
-            while (j >= 0 && patternBytes[i] != patternBytes[j]) {
+            while (j >= 0 && frazab[i] != frazab[j]) {
                 j = kmpNext[j];
             }
 
@@ -60,15 +60,18 @@ public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
         try {
             int j = 0;
             int buff;
-            while ((buff = bufferedInputStream.read()) != -1 && j < patternBytes.length) {
-                while (j >= 0 && buff != (patternBytes[j] & 0xff)) {
+            while ((buff = bufferedInputStream.read()) != -1 && j < frazab.length) {
+                while (j >= 0 && buff != (frazab[j] & 0xff)) {
                     j = kmpNext[j];
                 }
                 j++;
 
-                if (j >= patternBytes.length) {
+                if (j >= frazab.length) {
+                	//ZNALEZIONO!
                     resultCollector.push(task);
-                    break;
+                    System.out.println("znaleziono: " + bufferedInputStream.toString() + " " + j);
+                    //break;
+                    
                     //  j = kmpNext[j];
                 }
             }
