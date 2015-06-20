@@ -30,9 +30,9 @@ public class Main {
         boolean printStats = false;
         boolean useNaive = false;
         boolean useFastNIO = false;
-        boolean waitForUserInput = false;
+        boolean waitForUserInput = false; 
         int threadsCount = 5;
-        Charset characterSet = Charset.forName("US-ASCII");
+        Charset characterSet = Charset.forName("UTF-8"); //kodowanie  //US-ASCII
 
         // Options parsing
         // TODO: migrate to gnuopts for Java if time permit
@@ -132,10 +132,11 @@ public class Main {
             } else if (useFastNIO) {
                 taskExecutor = new KMPFileSearchTaskExecutorNIO(patternBytes, reporter, bufferSize);
             } else {
+            	//domyœlnie algorytm KMP
                 taskExecutor = new KMPFileSearchTaskExecutor(patternBytes, reporter, bufferSize);
             }
 
-            // Threading
+            // wykonanie wielow¹tkowe
             TaskAcceptor<FileSearchBean> taskAcceptor;
             final LinkedList<ExecutorThread<FileSearchBean>> threadPool = new LinkedList<ExecutorThread<FileSearchBean>>();
             if (threadsCount > 0) {
