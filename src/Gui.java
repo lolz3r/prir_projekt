@@ -151,7 +151,7 @@ public class Gui extends JFrame {
         			}
         		});
         		//pomoc
-            	Search.printHelp();
+            	Search.pomoc();
             }
 		
 		
@@ -252,10 +252,8 @@ public class Gui extends JFrame {
 	
 				    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				    	//wybierz folder
-				     // System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+				    
 				      textArea.setText(chooser.getSelectedFile().toString());
-				    } else {
-				      //System.out.println("No Selection ");
 				    }
 			}
 		});

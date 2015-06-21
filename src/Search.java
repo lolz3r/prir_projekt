@@ -133,19 +133,16 @@ public class Search {
     }
 
     /**
-     * Just print help to standard output.
+     * pomoc
      */
-    public static void printHelp() {
-        System.out.println("java FileSearcher [options] [--] <path> <string pattern>");
-        System.out.println("    Options:");
-        System.out.println("        -t <n>  \tSet processing threads count to <n> (Default: 5)");
-        System.out.println("        -b <n>  \tSet file-input buffer to <n> (Default: 8192)");
-        System.out.println("        -c <charset>  \tSet character set to <charset> (Default: \"US-ASCII\")");
-        System.out.println("        -s      \tPrint stats after processing (Default: no)");
-        System.out.println("        -w      \tWait for user input before start (Default: no)");
-        System.out.println("        -n      \tUse Naive search algorithm (Default: no)");
-        System.out.println();
-        System.out.println("    <path> - root path");
-        System.out.println("    <string pattern> - string pattern for search");
-    }
+    public static void pomoc() {
+        System.out.println("java Wyszukiwarka [opcje] [--] <�cie�ka> <wyszukiwana fraza>");
+        System.out.println("    Lista opcji:");
+        System.out.println("        -t <n>  \tUstawia ilo�� w�tk�w na n (domy�lnie tyle w�tk�w ile rdzenii w systemie)");
+        System.out.println("        -b <n>  \tUstawia wielko�� bufora odczytu na <n> (domy�lnie: 8192)");
+        System.out.println("        -c <kodowanie>  \tUstawia kodowanie znak�w na <kodowanie> (domy�lnie: \"UTF-8\")");
+        System.out.println("        -n      \tU�ywa naiwnego algorytmu zamiast KMP (domy�lnie: KMP)");
+    System.out.println();
+        System.out.println("    <ścieżka> - folder ktory jest przeszukiwany");
+        System.out.println("    <wyszukiwana fraza> - fraza kt�ra jest poszukiwana we wszystkich plikach w wybranym folderze");
 }
