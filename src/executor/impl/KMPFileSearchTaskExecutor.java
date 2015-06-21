@@ -60,7 +60,8 @@ public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
         try {
             int j = 0;
             int buff;
-            while ((buff = bufferedInputStream.read()) != -1 && j < frazab.length) {
+            //wczytywanie po 1 bajcie
+            while ((buff = bufferedInputStream.read()) != -1 && j < frazab.length) { //
                 while (j >= 0 && buff != (frazab[j] & 0xff)) {
                     j = kmpNext[j];
                 }
@@ -69,7 +70,8 @@ public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
                 if (j >= frazab.length) {
                 	//ZNALEZIONO!
                     resultCollector.push(task);
-                    System.out.println("znaleziono: " + bufferedInputStream.toString() + " " + j);
+                    System.out.println("Znaleziono: " + bufferedInputStream + " " + j);
+                    //j=0; //szukaj dalej
                     //break;
                     
                     //  j = kmpNext[j];

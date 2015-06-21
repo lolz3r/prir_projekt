@@ -5,7 +5,6 @@ import executor.TaskExecutor;
 import executor.impl.*;
 import stats.SimpleTaskAcceptorStats;
 import util.ExecutorThread;
-
 import main.*; //wszystkie pakiety z maina
 
 import java.io.File;
@@ -30,22 +29,17 @@ public class Main {
         boolean printStats = false;
         boolean useNaive = false;
         boolean useFastNIO = false;
-        boolean waitForUserInput = false; 
-        int threadsCount = 5;
-        Charset characterSet = Charset.forName("UTF-8"); //kodowanie  //US-ASCII
-
-        // Options parsing
-        // TODO: migrate to gnuopts for Java if time permit
+        int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
+        Charset kodowanie = Charset.forName("UTF-8"); //kodowanie  //US-ASCII
+        int algo = 0; //algorytm wyszukiwania
+        
+        // Opcje z linii komend
         int argumentsIndex = 0;
         while (args.length > argumentsIndex) {
             final String opts = args[argumentsIndex];
             boolean validArgument = false;
             if (opts.startsWith("-") && opts.length() > 1) {
                 switch (opts.charAt(1)) {
-                    case 'w':
-                        waitForUserInput = validArgument = true;
-                        argumentsIndex++;
-                        break;
                     case 's':
                         printStats = validArgument = true;
                         argumentsIndex++;
@@ -75,8 +69,8 @@ public class Main {
                     case 'c':
                         validArgument = args.length > (argumentsIndex + 1);
                         if (validArgument) {
-                            characterSet = Charset.forName(args[argumentsIndex + 1]);
-                            if (characterSet == null) {
+                            kodowanie = Charset.forName(args[argumentsIndex + 1]);
+                            if (kodowanie == null) {
                                 throw new IllegalArgumentException("Invalid charset specified: " + args[argumentsIndex + 1]);
                             }
                             argumentsIndex += 2;
@@ -92,25 +86,52 @@ public class Main {
                 break;
             }
         }
-
+        
+        
+        
+        
         if (args.length - argumentsIndex > 1) {
-            final File rootDirectory = new File(args[argumentsIndex]);
-            final String fraza = args[argumentsIndex + 1];
+            //uruchom szukanie
+        	String folder = args[argumentsIndex]; //folder
+        	String fraza = args[argumentsIndex + 1]; //fraza do szukania
+        			
+        	if(useNaive){ //algo
+        		algo=2;
+        	}else if(useFastNIO){
+        		algo=1;
+        	}else{
+        		algo=0; //domyœlny
+        	}
+            //szukaj
+        	szukaj(fraza,folder,algo,threadsCount,bufferSize,kodowanie);
+        	
+            } else {
+                printHelp();
+            }
+    }
+    
+    //g³ówna funkcje programu szukaj¹ca, do wywo³ania z gui
+    public static void szukaj(String fraza, String folder, int algo, int watki, int bufferSize, Charset kodowanie){
+
+        
+        
+            final File rootDirectory = new File(folder);
 
             if (!rootDirectory.exists()) {
-                throw new FileNotFoundException(rootDirectory + " not found");
+                try {
+					throw new FileNotFoundException(rootDirectory + " not found");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					System.err.println("Folder "+ rootDirectory + " nie istnieje!");
+				}
             }
 
             if (!rootDirectory.isDirectory()) {
                 throw new IllegalArgumentException("Input should be directory");
             }
 
-            if (waitForUserInput) {
-                System.out.println("Hit ENTER to start search!");
-                //noinspection ResultOfMethodCallIgnored
-                System.in.read();
-            }
-
+            //do zwracania wyników
             final TaskAcceptor<FileSearchBean> reporter = new TaskAcceptor<FileSearchBean>() {
                 public void push(FileSearchBean task) {
                 	//pokazywanie wyników wyszukiwania:
@@ -123,13 +144,13 @@ public class Main {
 
             final long startTime = System.currentTimeMillis();
 
-			final byte[] frazabytes = fraza.getBytes(characterSet); //wyszukiwana fraza na bajty
+			final byte[] frazabytes = fraza.getBytes(kodowanie); //wyszukiwana fraza na bajty
 
             // Algorithm selection
             TaskExecutor<FileSearchBean> taskExecutor;
-            if (useNaive) {
+            if (algo==2) {
                 taskExecutor = new NaiveFileSearchTaskExecutor(frazabytes, reporter, bufferSize);
-            } else if (useFastNIO) {
+            } else if (algo==1) {
                 taskExecutor = new KMPFileSearchTaskExecutorNIO(frazabytes, reporter, bufferSize);
             } else {
             	//domyœlnie algorytm KMP
@@ -139,11 +160,11 @@ public class Main {
             // wykonanie wielow¹tkowe
             TaskAcceptor<FileSearchBean> taskAcceptor;
             final LinkedList<ExecutorThread<FileSearchBean>> threadPool = new LinkedList<ExecutorThread<FileSearchBean>>();
-            if (threadsCount > 0) {
+            if (watki > 0) {
                 final BlockingTaskQueue<FileSearchBean> taskQueue = new BlockingTaskQueue<FileSearchBean>(4096);
                 taskAcceptor = taskQueue;
 
-                for (int i = 0; i < threadsCount; i++) {
+                for (int i = 0; i < watki; i++) {
                     final TaskRunner<FileSearchBean> taskRunner = new TaskRunner<FileSearchBean>(taskQueue, taskExecutor);
                     final ExecutorThread<FileSearchBean> t = new ExecutorThread<FileSearchBean>(taskRunner, "Executor #" + i);
                     t.start();
@@ -162,7 +183,12 @@ public class Main {
 
             // Wait for all threads...
             for (ExecutorThread<FileSearchBean> t : threadPool) {
-                t.join();
+                try {
+					t.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
 
             // Wait for threads...
@@ -170,20 +196,18 @@ public class Main {
             final long timeSpend = System.currentTimeMillis() - startTime;
             long threadTimeTotal = 0;
 
-            if (printStats) {
+            if (1==1) {
                 for (ExecutorThread<FileSearchBean> t : threadPool) {
                     TaskRunner tr = t.getTaskRunner();
-                    System.out.printf("Thread '%s' stats: task processed: %d, time: %d msec\n",
+                    System.out.printf("Statystyki w¹tku '%s': przetworzone zadania: %d  czas: %d ms\n",
                             t.getName(), tr.getTasksProcessed(), tr.getThreadUptime());
                     threadTimeTotal += tr.getThreadUptime();
                 }
                 final long filesPerSecond = timeSpend > 0 ? (int)(totalTaskProcessed*1000/timeSpend) : totalTaskProcessed;
-                System.out.printf("Execution time: %d msec (threads uptime: %d msec), files processed: %d\n" +
-                        "Speed: %d files per sec\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
+                System.out.printf("Czas wykonania: %d ms (czas w¹tku: %d ms), przetworzono plików: %d\n" +
+                        "Prêdkoœæ wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
             }
-        } else {
-            printHelp();
-        }
+       
     }
 
     /**
