@@ -176,6 +176,7 @@ public class Gui extends JFrame {
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				//dodaj statystyki
 				txtpnWyniki.setText(Search.s1.toString());
+				txtpnWyniki.setVisible(true); //poka¿
 				}
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
@@ -199,9 +200,11 @@ public class Gui extends JFrame {
 		contentPane.add(lblKodowanie);
 		
 		txtpnWyniki = new JTextPane();
+		
 		txtpnWyniki.setText("statystyki");
 		txtpnWyniki.setBounds(23, 150, 431, 118);
 		contentPane.add(txtpnWyniki);
+		txtpnWyniki.setVisible(false); //niewidzialne na pocz¹tku
 		
 		lblBufor = new JLabel("bufor");
 		lblBufor.setBounds(283, 122, 34, 14);

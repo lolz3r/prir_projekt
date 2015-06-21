@@ -14,14 +14,10 @@ import java.nio.charset.Charset;
 import java.util.LinkedList;
 
 /**
- * Main class.
- * How it works:
- * <ul>
- *  <li> On start pool of threads will be created (or single-threaded queue if 0 threads specified). Each
- *  thread pulling queue for new file and begin processing.
- *  <li> {@link FileListing} performs recursive file listing and pushes file to the queue.
- *</ul>
- *
+ * G³ówna klasa wykonuj¹ca wyszukiwanie.
+ * Dzia³a nastêpuj¹co:
+ * Na pocz¹tku tworzona jest pula w¹tków które maj¹ utworzone (lub pojedynczy w¹tek), a dla ka¿dego w¹tku tworzona
+ * kolejka plików i rozpoczynane jest ich przetwarzanie. 
  */
 public class Search {
 	public static StringBuilder s1 = new StringBuilder(); //string na wyniki
@@ -87,7 +83,7 @@ public class Search {
                     threadPool.add(t);
                 }
             } else {
-                // single-thread approach
+                // wyszukiwanie w 1 w¹tku
                 taskAcceptor = new SingleTaskQueue<FileSearchBean>(taskExecutor);
             }
 
@@ -96,7 +92,7 @@ public class Search {
             final FileListing fileListing = new FileListing(rootDirectory, taskCounter);
             fileListing.run();
 
-            // Wait for all threads...
+            // czekaj na wszyskie w¹tki
             for (ExecutorThread<FileSearchBean> t : threadPool) {
                 try {
 					t.join();
@@ -106,7 +102,7 @@ public class Search {
 				}
             }
 
-            // Wait for threads...
+            // oczekiwanie na w¹tki
             final long totalTaskProcessed = taskCounter.getTaskCount();
             final long timeSpend = System.currentTimeMillis() - startTime;
             long threadTimeTotal = 0;
