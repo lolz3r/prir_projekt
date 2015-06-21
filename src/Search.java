@@ -136,14 +136,14 @@ public class Search {
      * pomoc
      */
     public static void pomoc() {
-        System.out.println("java Wyszukiwarka [opcje] [--] <�cie�ka> <wyszukiwana fraza>");
+        System.out.println("java Wyszukiwarka [opcje] [--] <ścieżka> <wyszukiwana fraza>");
         System.out.println("    Lista opcji:");
-        System.out.println("        -t <n>  \tUstawia ilo�� w�tk�w na n (domy�lnie tyle w�tk�w ile rdzenii w systemie)");
-        System.out.println("        -b <n>  \tUstawia wielko�� bufora odczytu na <n> (domy�lnie: 8192)");
-        System.out.println("        -c <kodowanie>  \tUstawia kodowanie znak�w na <kodowanie> (domy�lnie: \"UTF-8\")");
-        System.out.println("        -n      \tU�ywa naiwnego algorytmu zamiast KMP (domy�lnie: KMP)");
+        System.out.println("        -t <n>  \tUstawia ilość wątków na n (domyślnie tyle wątków ile rdzenii w systemie)");
+        System.out.println("        -b <n>  \tUstawia wielkość bufora odczytu na <n> (domyślnie: 8192)");
+        System.out.println("        -c <kodowanie>  \tUstawia kodowanie znaków na <kodowanie> (domyślnie: \"UTF-8\")");
+        System.out.println("        -n      \tUżywa naiwnego algorytmu zamiast KMP (domyślnie: KMP)");
     System.out.println();
         System.out.println("    <ścieżka> - folder ktory jest przeszukiwany");
-        System.out.println("    <wyszukiwana fraza> - fraza kt�ra jest poszukiwana we wszystkich plikach w wybranym folderze");
+        System.out.println("    <wyszukiwana fraza> - fraza która jest poszukiwana we wszystkich plikach w wybranym folderze");
     }
 }
