@@ -1,43 +1,37 @@
 
 
-package executor.impl;
+package watki.algorytmy;
 
-import executor.TaskAcceptor;
-import executor.TaskSupplier;
+import watki.TaskAcceptor;
+import watki.TaskSupplier;
 
 import java.util.LinkedList;
 
 /**
- * Simple blocking task queue.
- *
- * <p>Call to {@link #pull()} will be blocked if queue is empty.
- * <p>Call to {@link #push(Object)} will be blocked if queue size greater than max size.
- *
- * @param <T> Task type
- * @see #BlockingTaskQueue(int)
+ * kolejka zadań
  */
+
 public class BlockingTaskQueue<T> implements TaskAcceptor<T>, TaskSupplier<T> {
     private final LinkedList<T> taskQueue;
     private final int maxSize;
     private boolean endOfData;
 
-    /** Size update lock, should not be locked  */
+    /** Wielkość która zarządza blokowaniem  */
     private final Object sizeUpdateLock = new Object();
     private int currentSize = 0;
 
     /**
-     * Create blocking queue with {@link Integer#MAX_VALUE} as max queue size.
-     * @see #BlockingTaskQueue(int)
+     * Twórz kolejkę blokująca za pomocą {@link Integer#MAX_VALUE} max_value - maksymalny rozmiar
      */
     public BlockingTaskQueue() {
         this(Integer.MAX_VALUE);
     }
 
     /**
-     * Create blocking queue with specified max size (push will be blocked).
+     * Twórz kolejkę blokującą z podanym rozmiarem maksylanym
      *
-     * @param maxSize Max size of the queue
-     * @throws IllegalArgumentException if maxSize equals or less zero
+     * @param maxSize maksymalny rozmiar
+     * @throws IllegalArgumentException
      */
     public BlockingTaskQueue(int maxSize) throws IllegalArgumentException {
         if (maxSize <= 0) {
@@ -47,13 +41,7 @@ public class BlockingTaskQueue<T> implements TaskAcceptor<T>, TaskSupplier<T> {
         taskQueue = new LinkedList<T>();
     }
 
-    /**
-     * Call to this method can be blocked if queue size is zero.
-     *
-     * @return New object (possibly null)
-     * @throws InterruptedException if interrupted
-     * @see #BlockingTaskQueue(int)
-     */
+    //pobieranie, może zostać zablokowane jeśli rozmiar 0
     public T pull() throws InterruptedException {
         synchronized (taskQueue) {
             while (taskQueue.size() == 0 && !endOfData) {
@@ -70,12 +58,7 @@ public class BlockingTaskQueue<T> implements TaskAcceptor<T>, TaskSupplier<T> {
         return null;
     }
 
-    /**
-     * Call to this method can be blocked if max queue size is reached.
-     *
-     * @throws IllegalArgumentException if task is null
-     * @throws InterruptedException if interrupted
-     */
+    //blokowane jeśli przekroczono maksylany rozmiar kolejki
     public void push(T task) throws IllegalArgumentException, InterruptedException {
         if (task == null) {
             throw new IllegalArgumentException("Task shall not be null");
@@ -106,10 +89,7 @@ public class BlockingTaskQueue<T> implements TaskAcceptor<T>, TaskSupplier<T> {
         }
     }
 
-    /**
-     * Safely update length of list (due we can't use concurrent).
-     * @param newSize new size of list.
-     */
+    //aktualizu długość listy
     private void notifyUpdateSize(int newSize) {
         synchronized (sizeUpdateLock) {
             currentSize = newSize;
@@ -118,10 +98,10 @@ public class BlockingTaskQueue<T> implements TaskAcceptor<T>, TaskSupplier<T> {
     }
 
     /**
-     * Wait until list size is changed to specified value or lower.
+     * Czeka aż rozmiar listy zostanie zmieniony na podany rozmiar lub mniejszy
      *
-     * @param expectedSize Expected size.
-     * @throws InterruptedException if thread interrupted.
+     * @param expectedSize oczekiwany rozmiar
+     * @throws InterruptedException
      */
     private void waitForSizeLowerThan(int expectedSize) throws InterruptedException {
         synchronized (sizeUpdateLock) {

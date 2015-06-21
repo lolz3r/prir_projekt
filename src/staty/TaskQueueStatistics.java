@@ -1,11 +1,11 @@
 
-package stats;
+package staty;
 
-import executor.TaskAcceptor;
-import executor.TaskSupplier;
+import watki.TaskAcceptor;
+import watki.TaskSupplier;
 
 /**
- * Task queue statistics decorator.
+ * Dodatek do tworzenia kolejki zadań
  */
 public class TaskQueueStatistics<T> implements TaskAcceptor<T>, TaskSupplier<T> {
     private final TaskAcceptor<T> taskAcceptor;

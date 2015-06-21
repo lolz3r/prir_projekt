@@ -1,10 +1,10 @@
 
 
-import executor.TaskAcceptor;
-import executor.TaskExecutor;
-import executor.impl.*;
-import stats.SimpleTaskAcceptorStats;
-import util.ExecutorThread;
+import watki.TaskAcceptor;
+import watki.TaskExecutor;
+import watki.algorytmy.*;
+import staty.SimpleTaskAcceptorStats;
+import extra.ExecutorThread;
 import main.*; //wszystkie pakiety z maina
 
 import java.io.File;
@@ -16,15 +16,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Main class.
- * How it works:
- * <ul>
- *  <li> On start pool of threads will be created (or single-threaded queue if 0 threads specified). Each
- *  thread pulling queue for new file and begin processing.
- *  <li> {@link FileListing} performs recursive file listing and pushes file to the queue.
- *</ul>
- *
+ * Główna klasa wykonująca wyszukiwanie.
+ * Działa następująco:
+ * Na początku tworzona jest pula wątków które mają utworzone (lub pojedynczy wątek), a dla każdego wątku tworzona
+ * kolejka plików i rozpoczynane jest ich przetwarzanie. 
  */
+
 public class Search {
 	public static StringBuilder s1 = new StringBuilder();
 	public static List<String> s2 = new ArrayList<>();
@@ -33,20 +30,18 @@ public class Search {
     public static void szukaj(String fraza, String folder, int algo, int watki, int bufferSize, String kodowanie1){
     		Charset kodowanie = Charset.forName(kodowanie1); //kodowanie z argumentu
         
-            final File rootDirectory = new File(folder);
+            final File glownyfolder = new File(folder);
 
-            if (!rootDirectory.exists()) {
+            if (!glownyfolder.exists()) {
                 try {
-					throw new FileNotFoundException(rootDirectory + " not found");
+					throw new FileNotFoundException(glownyfolder + " nie istnieje!");
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					System.err.println("Folder "+ rootDirectory + " nie istnieje!");
+					System.err.println("Folder "+ glownyfolder + " nie istnieje!");
 				}
             }
 
-            if (!rootDirectory.isDirectory()) {
-                throw new IllegalArgumentException("Input should be directory");
+            if (!glownyfolder.isDirectory()) {
+                throw new IllegalArgumentException("Wybrany katalog musi być folderem a nie plikiem.");
             }
 
             //do zwracania wyników
@@ -85,22 +80,22 @@ public class Search {
 
                 for (int i = 0; i < watki; i++) {
                     final TaskRunner<FileSearchBean> taskRunner = new TaskRunner<FileSearchBean>(taskQueue, taskExecutor);
-                    final ExecutorThread<FileSearchBean> t = new ExecutorThread<FileSearchBean>(taskRunner, "Executor #" + i);
+                    final ExecutorThread<FileSearchBean> t = new ExecutorThread<FileSearchBean>(taskRunner, "Wątek #" + i);
                     t.start();
 
                     threadPool.add(t);
                 }
             } else {
-                // single-thread approach
+                // wersja jednowątkowa
                 taskAcceptor = new SingleTaskQueue<FileSearchBean>(taskExecutor);
             }
 
             final SimpleTaskAcceptorStats<FileSearchBean> taskCounter = new SimpleTaskAcceptorStats<FileSearchBean>(taskAcceptor);
 
-            final FileListing fileListing = new FileListing(rootDirectory, taskCounter);
+            final FileListing fileListing = new FileListing(glownyfolder, taskCounter);
             fileListing.run();
 
-            // Wait for all threads...
+            // oczekiwanie na wątki
             for (ExecutorThread<FileSearchBean> t : threadPool) {
                 try {
 					t.join();
@@ -110,10 +105,10 @@ public class Search {
 				}
             }
 
-            // Wait for threads...
-            final long totalTaskProcessed = taskCounter.getTaskCount();
-            final long timeSpend = System.currentTimeMillis() - startTime;
-            long threadTimeTotal = 0;
+            // czeka na pozostałe wątki
+            final long przetworzonepliki = taskCounter.getTaskCount();
+            final long czasw = System.currentTimeMillis() - startTime;
+            long czaswatku = 0;
 
                 for (ExecutorThread<FileSearchBean> t : threadPool) {
                     TaskRunner tr = t.getTaskRunner();
@@ -122,13 +117,13 @@ public class Search {
                     
                     s1.append(String.format("Statystyki wątku '%s': przetworzone zadania: %d  czas: %d ms\n",
                             t.getName(), tr.getTasksProcessed(), tr.getThreadUptime()));
-                    threadTimeTotal += tr.getThreadUptime();
+                    czaswatku += tr.getThreadUptime();
                 }
-                final long filesPerSecond = timeSpend > 0 ? (int)(totalTaskProcessed*1000/timeSpend) : totalTaskProcessed;
+                final long filesPerSecond = czasw > 0 ? (int)(przetworzonepliki*1000/czasw) : przetworzonepliki;
                 System.out.printf("Czas wykonania: %d ms (czas wątku: %d ms), przetworzono plików: %d\n" +
-                        "Prędkość wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
+                        "Prędkość wyszukiwania: %d plików/s\n", czasw, czaswatku, przetworzonepliki, filesPerSecond);
                 s1.append(String.format("Czas wykonania: %d ms (czas wątku: %d ms), przetworzono plików: %d\n" +
-                        "Prędkość wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond));
+                        "Prędkość wyszukiwania: %d plików/s\n", czasw, czaswatku, przetworzonepliki, filesPerSecond));
        
     }
 

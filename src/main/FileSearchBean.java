@@ -1,12 +1,12 @@
 
 package main;
 
-import executor.Task;
+import watki.Task;
 
 import java.io.File;
 
 /**
- * Klasa reprezentuj¹ca wyszukiwany plik
+ * Klasa reprezentujÄ…ca wyszukiwany plik
  */
 public class FileSearchBean implements Task {
     private final File inputFile;

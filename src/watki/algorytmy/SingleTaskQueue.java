@@ -1,11 +1,11 @@
 
-package executor.impl;
+package watki.algorytmy;
 
-import executor.TaskAcceptor;
-import executor.TaskExecutor;
+import watki.TaskAcceptor;
+import watki.TaskExecutor;
 
 /**
- * Single-thread approach
+ * Jednowątkowa wersja kolejki zadań
  */
 public class SingleTaskQueue<T> implements TaskAcceptor<T> {
     private final TaskExecutor<T> taskExecutor;
@@ -25,6 +25,6 @@ public class SingleTaskQueue<T> implements TaskAcceptor<T> {
 
     
     public void signalEndOfData() {
-        // Do nothing
+        // nic
     }
 }

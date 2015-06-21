@@ -37,6 +37,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 
 public class Gui extends JFrame {
@@ -174,6 +175,8 @@ public class Gui extends JFrame {
 	 * Twórz gui!
 	 */
 	public Gui() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Gui.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		setTitle("Wyszukiwarka tekstu w plikach - Projekt PRiR");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 495, 149);
 		contentPane = new JPanel();
@@ -230,8 +233,9 @@ public class Gui extends JFrame {
 				            try {
 				             Desktop.getDesktop().edit(new File(o.toString()) );
 				            	
-							} catch (IOException e) {
-								e.printStackTrace();
+							} catch (Exception e) {
+								//błąd otwierania
+								//e.printStackTrace();
 							}
 				          }
 				        }

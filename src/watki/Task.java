@@ -1,5 +1,5 @@
 
-package executor;
+package watki;
 
 /**
  * Task interface marker.

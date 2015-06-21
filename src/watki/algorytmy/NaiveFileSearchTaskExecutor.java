@@ -1,19 +1,17 @@
 
-package executor.impl;
+package watki.algorytmy;
 
 import main.FileSearchBean;
-import executor.TaskAcceptor;
-import executor.TaskExecutor;
+import watki.TaskAcceptor;
+import watki.TaskExecutor;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * Simple Naive substring pattern search algorithm implementation.
- * Complexity: O(nm),
- *  where m - length of substring,
- *  n - length of the searchable text.
+ * Prosta implementacja naiwnego algorytmu wyszukiwania wzorców w tekście
+ * Złożoność obliczeniowa: O(nm),
  */
 public class NaiveFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
     public static final int DEFAULT_BUFFER_SIZE = 8192;
@@ -54,7 +52,7 @@ public class NaiveFileSearchTaskExecutor implements TaskExecutor<FileSearchBean>
                     }
 
                     if (k == patternBytes.length) {
-                        // We found whole pattern
+                        // wzorzec znaleziony, koniec
                         resultCollector.push(task);
                         break;
                     }
@@ -64,10 +62,10 @@ public class NaiveFileSearchTaskExecutor implements TaskExecutor<FileSearchBean>
         } finally {
             try {
                 bufferedInputStream.close();
-            } catch (IOException ioe) { /* ignore silently */ }
+            } catch (IOException ioe) { }
             try {
                 fileInputStream.close();
-            } catch(IOException ioe) { /* ignore silently */ }
+            } catch(IOException ioe) { }
         }
     }
 }

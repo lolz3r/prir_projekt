@@ -1,10 +1,10 @@
 
-package util;
+package extra;
 
-import executor.impl.TaskRunner;
+import watki.algorytmy.TaskRunner;
 
 /**
- * Simple thread executor class which provides its task runner.
+ * Prosta klasa do wykonywania zadań
  */
 public class ExecutorThread<T> extends Thread {
     private final TaskRunner<T> taskRunner;

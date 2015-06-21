@@ -1,11 +1,10 @@
 
-package stats;
+package staty;
 
-import executor.TaskAcceptor;
+import watki.TaskAcceptor;
 
 /**
- * Utility decorator class to calculate simple statistics.
- * Not thread-safe.
+ * Dodatek do tworzenia statystyk
  */
 public class SimpleTaskAcceptorStats<T> implements TaskAcceptor<T> {
     private final TaskAcceptor<T> taskAcceptor;
@@ -23,10 +22,7 @@ public class SimpleTaskAcceptorStats<T> implements TaskAcceptor<T> {
     
     public void push(T task) throws IllegalArgumentException, InterruptedException {
         taskCount++;
-
-        // final long startTime = System.currentTimeMillis();
         taskAcceptor.push(task);
-        // totalWaitTime += System.currentTimeMillis() - startTime;
     }
 
     

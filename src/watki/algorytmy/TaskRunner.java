@@ -1,16 +1,14 @@
 
-package executor.impl;
+package watki.algorytmy;
 
-import executor.TaskExecutor;
-import executor.TaskSupplier;
-//import org.apache.log4j.Logger;
+import watki.TaskExecutor;
+import watki.TaskSupplier;
 
 /**
- * Runner for task.
- * @param <T> Type of Task.
+ * Klasa wykonuwująca zadania
+ * @param <T> typ zadania
  */
 public class TaskRunner<T> implements Runnable {
-    //private final Logger logger = Logger.getLogger(TaskRunner.class);
     private final TaskSupplier<T> taskSupplier;
     private final TaskExecutor<T> taskExecutor;
     private volatile long threadUptime;
@@ -34,16 +32,14 @@ public class TaskRunner<T> implements Runnable {
                     tasksProcessed++;
                 }
             } catch (InterruptedException e) {
-                //logger.info(String.format("Task runner: %s interrupted.", executorThread.getName()));
+               
                 Thread.currentThread().interrupt();
             } catch (Exception e) {
-                //logger.error("Task throws an exception, ignoring...", e);
             }
         }
 
         threadUptime = System.currentTimeMillis() - startTime;
 
-        //logger.debug(String.format("Thread %s execution completed.", executorThread.getName()));
     }
 
     public long getTasksProcessed() {

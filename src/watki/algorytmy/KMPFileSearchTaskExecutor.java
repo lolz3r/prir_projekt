@@ -1,19 +1,17 @@
 
-package executor.impl;
+package watki.algorytmy;
 
 import main.FileSearchBean;
-import executor.TaskAcceptor;
-import executor.TaskExecutor;
+import watki.TaskAcceptor;
+import watki.TaskExecutor;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- * KMP algorithm substring pattern searching algorithm implementation.
- * Complexity: O(m)+O(n)
- *  where m - length of substring,
- *  n - length of the searchable text.
+ * Implementacja algorytmu KMP
+ * Złożoność obliczeniowa: O(m)+O(n)
  */
 public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
     public static final int DEFAULT_BUFFER_SIZE = 8192;
@@ -72,7 +70,7 @@ public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
                     resultCollector.push(task);
                     System.out.println("Znaleziono: " + bufferedInputStream + " " + j);
                     //j=0; //szukaj dalej
-                    //break;
+                    break;
                     
                     //  j = kmpNext[j];
                 }
@@ -80,10 +78,10 @@ public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
         } finally {
             try {
                 bufferedInputStream.close();
-            } catch (IOException ioe) { /* ignore silently */ }
+            } catch (IOException ioe) {  }
             try {
                 fileInputStream.close();
-            } catch(IOException ioe) { /* ignore silently */ }
+            } catch(IOException ioe) {  }
         }
     }
 }

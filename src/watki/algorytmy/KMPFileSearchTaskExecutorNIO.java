@@ -1,10 +1,9 @@
 
-package executor.impl;
+package watki.algorytmy;
 
 import main.FileSearchBean;
-import executor.TaskAcceptor;
-import executor.TaskExecutor;
-//import org.apache.log4j.Logger;
+import watki.TaskAcceptor;
+import watki.TaskExecutor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,11 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Knuth–Morris–Pratt algorithm substring pattern searching algorithm implementation.
- * Complexity: O(m)+O(n)
- *  where m - length of substring,
- *  n - length of the searchable text.
+ * Zmodyfikowana implementacja algorytmu KMP
+ * Złożoność obliczeniowa: O(m)+O(n)
  */
+
 public class KMPFileSearchTaskExecutorNIO implements TaskExecutor<FileSearchBean> {
    // private final Logger logger = Logger.getLogger(KMPFileSearchTaskExecutorNIO.class);
     public static final int DEFAULT_BUFFER_SIZE = 8192;
@@ -41,7 +39,7 @@ public class KMPFileSearchTaskExecutorNIO implements TaskExecutor<FileSearchBean
         this.bufferSize = bufferSize;
 
         this.kmpNext = new int[patternBytes.length];
-        // Pre-compute
+        // przeliczanie
         int j = -1;
         for (int i = 0; i < patternBytes.length; i++) {
             if (i == 0) {
@@ -64,7 +62,7 @@ public class KMPFileSearchTaskExecutorNIO implements TaskExecutor<FileSearchBean
         final FileInputStream fileInputStream = new FileInputStream(task.getInputFile());
         final FileChannel fc = fileInputStream.getChannel();
 
-        // Maintain one byte buffer per thread
+        // zostaw 1 bufor dla 1 wątku
         Long threadId = Thread.currentThread().getId();
         ByteBuffer byteBuffer = byteBuffers.get(threadId);
         if (byteBuffer == null) {
@@ -77,23 +75,12 @@ public class KMPFileSearchTaskExecutorNIO implements TaskExecutor<FileSearchBean
             int buffReaded;
             byteBuffer.clear();
 
-//            logger.debug(String.format("0 [%d]Buffer: %d - %d - %d\n",
-//                    counter++,
-//                    byteBuffer.position(),
-//                    byteBuffer.limit(),
-//                    byteBuffer.capacity()));
             while ((buffReaded = fc.read(byteBuffer)) != -1 && j < patternBytes.length) {
                 if (buffReaded == 0)
                     continue;
 
                 byteBuffer.position(0);
                 byteBuffer.limit(buffReaded);
-
-//                logger.debug(String.format("N Buffer reading: %d - %d - %d - %d\n",
-//                    byteBuffer.position(),
-//                    byteBuffer.limit(),
-//                    byteBuffer.capacity(),
-//                    byteBuffer.remaining()));
 
                 while (byteBuffer.hasRemaining() && j < patternBytes.length) {
                     final int currChar = byteBuffer.get() & 0xff;
@@ -106,23 +93,19 @@ public class KMPFileSearchTaskExecutorNIO implements TaskExecutor<FileSearchBean
                     if (j >= patternBytes.length) {
                         resultCollector.push(task);
                         return;
-                        //  j = kmpNext[j];
+                        
                     }
                 }
                 byteBuffer.clear();
-//                logger.debug(String.format("N Buffer: %d - %d - %d - %d\n",
-//                    byteBuffer.position(),
-//                    byteBuffer.limit(),
-//                    byteBuffer.capacity(),
-//                    byteBuffer.remaining()));
+
             }
         } finally {
             try {
                 fc.close();
-            } catch(IOException ioe) { /* ignore silently */ }
+            } catch(IOException ioe) {  }
             try {
                 fileInputStream.close();
-            } catch(IOException ioe) { /* ignore silently */ }
+            } catch(IOException ioe) {  }
         }
     }
 }
