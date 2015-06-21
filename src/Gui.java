@@ -5,11 +5,14 @@ import java.awt.TextArea;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 //import javafx.scene.control.ComboBox;
 =======
 import javafx.scene.control.ComboBox;
 >>>>>>> parent of 934508f... 1
 
+=======
+>>>>>>> parent of 39567d4... gui diza≈Ça
 =======
 >>>>>>> parent of 39567d4... gui diza≈Ça
 =======
@@ -71,12 +74,15 @@ public class Gui extends JFrame {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba wÔøΩtkÔøΩw taka jak liczba rdzenii
 =======
 >>>>>>> parent of 39567d4... gui diza≈Ça
 =======
         int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba wπtkÛw taka jak liczba rdzenii
 >>>>>>> parent of 934508f... 1
+=======
+>>>>>>> parent of 39567d4... gui diza≈Ça
 =======
 >>>>>>> parent of 39567d4... gui diza≈Ça
         
@@ -194,6 +200,7 @@ public class Gui extends JFrame {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				//sprawdÔøΩ czy podano wymagane opcje
 =======
 				//sprawdü czy podano wymagane opcje
@@ -207,6 +214,10 @@ public class Gui extends JFrame {
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
+=======
+				//uruchom szukanie
+				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), 8, (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
+>>>>>>> parent of 39567d4... gui diza≈Ça
 =======
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), 8, (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
@@ -281,6 +292,7 @@ public class Gui extends JFrame {
 		contentPane.add(btnDodajFolder);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		comboBox_3 = new JComboBox();
 		//generuj listÍ do wybory wπtkÛw
@@ -297,6 +309,8 @@ public class Gui extends JFrame {
 		lblWtki = new JLabel("w\u0105tki");
 		lblWtki.setBounds(380, 122, 46, 14);
 		contentPane.add(lblWtki);
+=======
+>>>>>>> parent of 39567d4... gui diza≈Ça
 =======
 >>>>>>> parent of 39567d4... gui diza≈Ça
 =======
