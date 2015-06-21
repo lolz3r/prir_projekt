@@ -13,6 +13,12 @@ import java.awt.TextArea;
 
 
 
+
+
+
+
+
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -29,12 +35,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -192,6 +200,8 @@ public class Gui extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSzukaj = new JButton("Szukaj");
+		JRootPane rootPane = SwingUtilities.getRootPane(btnSzukaj); 
+		rootPane.setDefaultButton(btnSzukaj);
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//sprawdź czy podano wymagane opcje
@@ -208,11 +218,10 @@ public class Gui extends JFrame {
 				//dodanie listy plików
 				DefaultListModel<String> modelwyn = new DefaultListModel<>();
 				list = new JList<>(modelwyn);
-				
+				 
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				txtpnWyniki.setText(Search.s1.toString());
-<<<<<<< HEAD
 				//dodanie wyników do listy
 				list.removeAll();
 				for(String wyn : Search.s2){
@@ -220,15 +229,15 @@ public class Gui extends JFrame {
 				}
 				list.setBounds(23, 290, 431, 118);
 				contentPane.add(list);	
-=======
+
 				//dodanie listy plików
 				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
-				list = new JList<>(Search.s2.toArray());
+				//list = new JList<>(Search.s2.toArray());
 				JScrollPane scrollPane_1 = new JScrollPane(list);
 				scrollPane_1.setBounds(23, 290, 431, 118);
 				//list.setBounds(23, 290, 431, 118);
 				contentPane.add(scrollPane_1);
->>>>>>> origin/master
+
 				//otwiera plik po 2 krotnym kliknięciu
 				MouseListener mouseListener = new MouseAdapter() {
 				      public void mouseClicked(MouseEvent mouseEvent) {
