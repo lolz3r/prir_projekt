@@ -30,7 +30,7 @@ public class Search {
 
             if (!rootDirectory.exists()) {
                 try {
-					throw new FileNotFoundException(rootDirectory + " not found");
+					throw new FileNotFoundException(rootDirectory + " nie istnieje!");
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					//e.printStackTrace();
@@ -39,7 +39,7 @@ public class Search {
             }
 
             if (!rootDirectory.isDirectory()) {
-                throw new IllegalArgumentException("Input should be directory");
+                throw new IllegalArgumentException("Wybrana œcia¿ka nie jest folderem!");
             }
 
             //do zwracania wyników
@@ -57,7 +57,7 @@ public class Search {
 
 			final byte[] frazabytes = fraza.getBytes(kodowanie); //wyszukiwana fraza na bajty
 
-            // Algorithm selection
+            // wybór algorytmu wyszukiwania
             TaskExecutor<FileSearchBean> taskExecutor;
             if (algo==2) {
                 taskExecutor = new NaiveFileSearchTaskExecutor(frazabytes, reporter, bufferSize);
@@ -97,7 +97,6 @@ public class Search {
                 try {
 					t.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             }
@@ -126,19 +125,17 @@ public class Search {
     }
 
     /**
-     * Just print help to standard output.
+     * Wyœwietla pomoc - jak u¿ywaæ tego programu z linii komend
      */
-    public static void printHelp() {
-        System.out.println("java FileSearcher [options] [--] <path> <string pattern>");
-        System.out.println("    Options:");
-        System.out.println("        -t <n>  \tSet processing threads count to <n> (Default: 5)");
-        System.out.println("        -b <n>  \tSet file-input buffer to <n> (Default: 8192)");
-        System.out.println("        -c <charset>  \tSet character set to <charset> (Default: \"US-ASCII\")");
-        System.out.println("        -s      \tPrint stats after processing (Default: no)");
-        System.out.println("        -w      \tWait for user input before start (Default: no)");
-        System.out.println("        -n      \tUse Naive search algorithm (Default: no)");
+    public static void pomoc() {
+        System.out.println("java Wyszukiwarka [opcje] [--] <œcie¿ka> <wyszukiwana fraza>");
+        System.out.println("    Lista opcji:");
+        System.out.println("        -t <n>  \tUstawia iloœæ w¹tków na n (domyœlnie tyle w¹tków ile rdzenii w systemie)");
+        System.out.println("        -b <n>  \tUstawia wielkoœæ bufora odczytu na <n> (domyœlnie: 8192)");
+        System.out.println("        -c <kodowanie>  \tUstawia kodowanie znaków na <kodowanie> (domyœlnie: \"UTF-8\")");
+        System.out.println("        -n      \tU¿ywa naiwnego algorytmu zamiast KMP (domyœlnie: KMP)");
         System.out.println();
-        System.out.println("    <path> - root path");
-        System.out.println("    <string pattern> - string pattern for search");
+        System.out.println("    <œcie¿ka> - folder który jest przeszukiwany");
+        System.out.println("    <wyszukiwana fraza> - fraza która jest poszukiwana we wszystkich plikach w wybranym folderze");
     }
 }

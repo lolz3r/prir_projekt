@@ -140,7 +140,7 @@ public class Gui extends JFrame {
         			}
         		});
         		//pomoc
-            	Search.printHelp();
+            	Search.pomoc();
             }
 		
 		
@@ -251,7 +251,7 @@ public class Gui extends JFrame {
 		//generuj listê do wybory w¹tków
 		int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
         Vector<Integer> comboBox3Items=new Vector();
-        for(int i=threadsCount; i>0; i--){
+        for(int i=threadsCount; i>-1; i--){
         	comboBox3Items.add(i);
         }
         final DefaultComboBoxModel model3 = new DefaultComboBoxModel(comboBox3Items);
