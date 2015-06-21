@@ -211,9 +211,10 @@ public class Gui extends JFrame {
 				//dodanie listy plików
 				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
 				list = new JList<>(Search.s2.toArray());
-				list.removeAll(); //czyść
-				list.setBounds(23, 290, 431, 118);
-				contentPane.add(list);	
+				JScrollPane scrollPane_1 = new JScrollPane(list);
+				scrollPane_1.setBounds(23, 290, 431, 118);
+				//list.setBounds(23, 290, 431, 118);
+				contentPane.add(scrollPane_1);
 				//otwiera plik po 2 krotnym kliknięciu
 				MouseListener mouseListener = new MouseAdapter() {
 				      public void mouseClicked(MouseEvent mouseEvent) {
@@ -270,8 +271,11 @@ public class Gui extends JFrame {
 		
 		txtpnWyniki = new JTextPane();
 		//txtpnWyniki.setText("wyniki");
-		txtpnWyniki.setBounds(23, 150, 431, 118);
-		contentPane.add(txtpnWyniki);
+		//txtpnWyniki.setBounds(23, 150, 431, 118);
+		//contentPane.add(txtpnWyniki);
+		JScrollPane scrollPane_2 = new JScrollPane(txtpnWyniki);
+		scrollPane_2.setBounds(23, 150, 431, 118);
+		contentPane.add(scrollPane_2);
 		
 		lblBufor = new JLabel("bufor");
 		lblBufor.setBounds(283, 122, 34, 14);
