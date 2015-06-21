@@ -115,7 +115,6 @@ public class Search {
             final long timeSpend = System.currentTimeMillis() - startTime;
             long threadTimeTotal = 0;
 
-            if (1==1) {
                 for (ExecutorThread<FileSearchBean> t : threadPool) {
                     TaskRunner tr = t.getTaskRunner();
                     System.out.printf("Statystyki wątku '%s': przetworzone zadania: %d  czas: %d ms\n",
@@ -130,7 +129,6 @@ public class Search {
                         "Prędkość wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
                 s1.append(String.format("Czas wykonania: %d ms (czas wątku: %d ms), przetworzono plików: %d\n" +
                         "Prędkość wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond));
-            }
        
     }
 
