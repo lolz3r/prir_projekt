@@ -11,6 +11,7 @@ import java.awt.TextArea;
 
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -41,6 +42,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Vector;
 
 
@@ -196,12 +198,20 @@ public class Gui extends JFrame {
 				else if(textField.getText().length() < 1)
 					JOptionPane.showMessageDialog(contentPane, "Proszę wpisać frazę która ma zostać wyszukana.");
 				else
+					
+				//usunięcie wcześniejszych wyników
+				Search.s1 = new StringBuilder();
+				Search.s2.clear();
+				//list.removeAll();
+				txtpnWyniki.setText("");
+				
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				txtpnWyniki.setText(Search.s1.toString());
 				//dodanie listy plików
 				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
 				list = new JList<>(Search.s2.toArray());
+				list.removeAll(); //czyść
 				list.setBounds(23, 290, 431, 118);
 				contentPane.add(list);	
 				//otwiera plik po 2 krotnym kliknięciu
