@@ -75,7 +75,11 @@ public class Gui extends JFrame {
 	private JComboBox comboBox_3;
 	private JLabel lblWtki;
 	
+<<<<<<< HEAD
 	private JList<String> list;
+=======
+	private JList<Object> list;
+>>>>>>> parent of bb77e1b... a
 
 	/**
 	 * Uruchamianie
@@ -200,9 +204,12 @@ public class Gui extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSzukaj = new JButton("Szukaj");
+<<<<<<< HEAD
 		JRootPane rootPane = SwingUtilities.getRootPane(btnSzukaj); 
 		//((JcontentPane.setDefaultButton(btnSzukaj);
 		
+=======
+>>>>>>> parent of bb77e1b... a
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//sprawdź czy podano wymagane opcje
@@ -233,12 +240,19 @@ public class Gui extends JFrame {
 
 				//dodanie listy plików
 				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
+<<<<<<< HEAD
 				//list = new JList<>(Search.s2.toArray());
+=======
+				list = new JList<>(Search.s2.toArray());
+>>>>>>> parent of bb77e1b... a
 				JScrollPane scrollPane_1 = new JScrollPane(list);
 				scrollPane_1.setBounds(23, 290, 431, 118);
 				//list.setBounds(23, 290, 431, 118);
 				contentPane.add(scrollPane_1);
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of bb77e1b... a
 				//otwiera plik po 2 krotnym kliknięciu
 				MouseListener mouseListener = new MouseAdapter() {
 				      public void mouseClicked(MouseEvent mouseEvent) {
