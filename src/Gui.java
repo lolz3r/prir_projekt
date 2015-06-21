@@ -2,7 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 
-import javafx.scene.control.ComboBox;
+//import javafx.scene.control.ComboBox;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,6 +37,7 @@ public class Gui extends JFrame {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 2992990019695863280L;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -54,14 +55,14 @@ public class Gui extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException  {
-		//obs³uga argumentów z linii komend
+		//obsï¿½uga argumentï¿½w z linii komend
 		int bufferSize = 8192;
         boolean printStats = false;
         boolean useNaive = false;
         boolean useFastNIO = false;
         String kodowanie = "UTF-8"; //kodowanie  //US-ASCII
         int algo = 0; //algorytm wyszukiwania
-        int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
+        int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba wï¿½tkï¿½w taka jak liczba rdzenii
         
         // Opcje z linii komend
         int argumentsIndex = 0;
@@ -130,7 +131,7 @@ public class Gui extends JFrame {
         	}else if(useFastNIO){
         		algo=1;
         	}else{
-        		algo=0; //domyœlny
+        		algo=0; //domyï¿½lny
         	}
             //szukaj
         	Search.szukaj(fraza,folder,algo,threadsCount,bufferSize,kodowanie);
@@ -174,14 +175,15 @@ public class Gui extends JFrame {
 		JButton btnSzukaj = new JButton("Szukaj");
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//sprawdŸ czy podano wymagane opcje
+				//sprawdï¿½ czy podano wymagane opcje
 				if(textArea.getText().length() < 1)
-					JOptionPane.showMessageDialog(contentPane, "Proszê wybraæ folder który ma zostaæ przeszukany.");
+					JOptionPane.showMessageDialog(contentPane, "Proszï¿½ wybraï¿½ folder ktï¿½ry ma zostaï¿½ przeszukany.");
 				else if(textField.getText().length() < 1)
-					JOptionPane.showMessageDialog(contentPane, "Proszê wpisaæ frazê która ma zostaæ wyszukana.");
+					JOptionPane.showMessageDialog(contentPane, "Proszï¿½ wpisaï¿½ frazï¿½ ktï¿½ra ma zostaï¿½ wyszukana.");
 				else
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
+				txtpnWyniki.setText(Search.s1.toString());
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
 			}
@@ -230,7 +232,7 @@ public class Gui extends JFrame {
 		JButton btnDodajFolder = new JButton("Dodaj folder");
 		btnDodajFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//klikniêty
+				//klikniï¿½ty
 				 JFileChooser chooser = new JFileChooser();
 				    chooser.setCurrentDirectory(new java.io.File("."));
 				    chooser.setDialogTitle("choosertitle");
@@ -250,8 +252,8 @@ public class Gui extends JFrame {
 		contentPane.add(btnDodajFolder);
 		
 		comboBox_3 = new JComboBox();
-		//generuj listê do wybory w¹tków
-		int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
+		//generuj listï¿½ do wybory wï¿½tkï¿½w
+		int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba wï¿½tkï¿½w taka jak liczba rdzenii
         Vector<Integer> comboBox3Items=new Vector();
         for(int i=threadsCount; i>0; i--){
         	comboBox3Items.add(i);
