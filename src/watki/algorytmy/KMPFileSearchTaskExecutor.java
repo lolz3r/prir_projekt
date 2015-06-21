@@ -68,7 +68,7 @@ public class KMPFileSearchTaskExecutor implements TaskExecutor<FileSearchBean> {
                 if (j >= frazab.length) {
                 	//ZNALEZIONO!
                     resultCollector.push(task);
-                    System.out.println("Znaleziono: " + bufferedInputStream + " " + j);
+                    //System.out.println("Znaleziono: " + bufferedInputStream + " " + j);
                     //j=0; //szukaj dalej
                     break;
                     

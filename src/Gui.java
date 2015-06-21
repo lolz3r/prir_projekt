@@ -246,7 +246,10 @@ public class Gui extends JFrame {
 				contentPane.revalidate();
 				contentPane.repaint();
 				//zmiana rozmiaru
-				setBounds(100, 100, 495, 383);
+				if(btnPokaStatystyki.isVisible())
+					setBounds(100, 100, 495, 383);
+				else
+					setBounds(100, 100, 495, 555);
 				
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
