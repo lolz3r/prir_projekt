@@ -209,8 +209,8 @@ public class Gui extends JFrame {
 		textArea.setBounds(70, 48, 222, 16);
 		contentPane.add(textArea);
 		
-		JLabel lblFolder = new JLabel("folder:");
-		lblFolder.setBounds(33, 48, 46, 14);
+		JLabel lblFolder = new JLabel("folder");
+		lblFolder.setBounds(23, 48, 46, 14);
 		contentPane.add(lblFolder);
 		
 		JButton btnDodajFolder = new JButton("Dodaj folder");
