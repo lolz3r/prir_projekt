@@ -145,4 +145,5 @@ public class Search {
     System.out.println();
         System.out.println("    <ścieżka> - folder ktory jest przeszukiwany");
         System.out.println("    <wyszukiwana fraza> - fraza kt�ra jest poszukiwana we wszystkich plikach w wybranym folderze");
+    }
 }

@@ -162,7 +162,7 @@ public class Gui extends JFrame {
 	 */
 	public Gui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 600);
+		setBounds(100, 100, 480, 189);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -193,10 +193,12 @@ public class Gui extends JFrame {
 				
 				contentPane.revalidate();
 				contentPane.repaint();
+				//zmiana rozmiaru
+				setBounds(100, 100, 480, 550);
 				
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
-			}
+			} 
 		});
 		btnSzukaj.setBounds(347, 10, 107, 23);
 		contentPane.add(btnSzukaj);
