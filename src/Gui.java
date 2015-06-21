@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.TextArea;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import java.awt.GridBagConstraints;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JList;
@@ -35,6 +37,12 @@ public class Gui extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JComboBox comboBox_1;
+	private JTextArea textArea;
+	private JComboBox comboBox;
+	private JLabel lblKodowanie;
+	private JTextPane txtpnWyniki;
+	private JLabel lblBufor;
+	private JComboBox comboBox_2;
 
 	/**
 	 * Launch the application.
@@ -46,7 +54,7 @@ public class Gui extends JFrame {
         boolean useNaive = false;
         boolean useFastNIO = false;
         int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
-        Charset kodowanie = Charset.forName("UTF-8"); //kodowanie  //US-ASCII
+        String kodowanie = "UTF-8"; //kodowanie  //US-ASCII
         int algo = 0; //algorytm wyszukiwania
         
         // Opcje z linii komend
@@ -85,7 +93,7 @@ public class Gui extends JFrame {
                     case 'c':
                         validArgument = args.length > (argumentsIndex + 1);
                         if (validArgument) {
-                            kodowanie = Charset.forName(args[argumentsIndex + 1]);
+                            kodowanie = args[argumentsIndex + 1];
                             if (kodowanie == null) {
                                 throw new IllegalArgumentException("Invalid charset specified: " + args[argumentsIndex + 1]);
                             }
@@ -158,10 +166,16 @@ public class Gui extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSzukaj = new JButton("Szukaj");
+		btnSzukaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//uruchom szukanie
+				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), 8, (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
+			}
+		});
 		btnSzukaj.setBounds(302, 10, 107, 23);
 		contentPane.add(btnSzukaj);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"UTF-8", "cp1250", "US-ASCII", "UTF-16"}));
 		comboBox.setBounds(213, 119, 60, 20);
 		contentPane.add(comboBox);
@@ -171,41 +185,54 @@ public class Gui extends JFrame {
 		comboBox_1.setBounds(23, 119, 121, 20);
 		contentPane.add(comboBox_1);
 		
-		JLabel lblKodowanie = new JLabel("kodowanie");
+		lblKodowanie = new JLabel("kodowanie");
 		lblKodowanie.setBounds(154, 122, 60, 14);
 		contentPane.add(lblKodowanie);
 		
-		JTextPane txtpnWyniki = new JTextPane();
+		txtpnWyniki = new JTextPane();
 		txtpnWyniki.setText("wyniki");
 		txtpnWyniki.setBounds(23, 150, 386, 118);
 		contentPane.add(txtpnWyniki);
 		
-		JLabel lblBufor = new JLabel("bufor");
+		lblBufor = new JLabel("bufor");
 		lblBufor.setBounds(283, 122, 34, 14);
 		contentPane.add(lblBufor);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"8192", "32768", "16384", "4096", "2048", "1024", "512", "256", "128", "64", "32"}));
+		comboBox_2 = new JComboBox();
+		comboBox_2.setModel(new DefaultComboBoxModel(new Integer[] {8192, 32768, 16384, 4096, 2048, 1024, 512, 256, 128, 64, 32}));
 		comboBox_2.setBounds(315, 119, 60, 20);
 		contentPane.add(comboBox_2);
 		
-		JButton btnDodajFolder = new JButton("Dodaj folder");
-		btnDodajFolder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//klikniêty
-				System.out.println("klikniêty przycisk szukaj");
-			}
-		});
-		btnDodajFolder.setBounds(302, 44, 107, 23);
-		contentPane.add(btnDodajFolder);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setText("...");
-		textArea.setBounds(77, 48, 92, 16);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(70, 48, 222, 16);
 		contentPane.add(textArea);
 		
 		JLabel lblFolder = new JLabel("folder:");
 		lblFolder.setBounds(33, 48, 46, 14);
 		contentPane.add(lblFolder);
+		
+		JButton btnDodajFolder = new JButton("Dodaj folder");
+		btnDodajFolder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//klikniêty
+				 JFileChooser chooser = new JFileChooser();
+				    chooser.setCurrentDirectory(new java.io.File("."));
+				    chooser.setDialogTitle("choosertitle");
+				    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				    chooser.setAcceptAllFileFilterUsed(false);
+	
+				    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				    	//wybierz folder
+				     // System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+				      textArea.setText(chooser.getSelectedFile().toString());
+				    } else {
+				      //System.out.println("No Selection ");
+				    }
+			}
+		});
+		btnDodajFolder.setBounds(302, 44, 107, 23);
+		contentPane.add(btnDodajFolder);
 	}
 }

@@ -27,9 +27,8 @@ public class Search {
     
     
     //g³ówna funkcje programu szukaj¹ca, do wywo³ania z gui
-    public static void szukaj(String fraza, String folder, int algo, int watki, int bufferSize, Charset kodowanie){
-
-        
+    public static void szukaj(String fraza, String folder, int algo, int watki, int bufferSize, String kodowanie1){
+    		Charset kodowanie = Charset.forName(kodowanie1); //kodowanie z argumentu
         
             final File rootDirectory = new File(folder);
 
