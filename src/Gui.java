@@ -1,3 +1,8 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.TextArea;
+
+//import javafx.scene.control.ComboBox;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -5,6 +10,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -16,7 +25,6 @@ import javax.swing.AbstractListModel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -29,6 +37,7 @@ public class Gui extends JFrame {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 2992990019695863280L;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -41,19 +50,21 @@ public class Gui extends JFrame {
 	private JComboBox comboBox_2;
 	private JComboBox comboBox_3;
 	private JLabel lblWtki;
+	
+	private JList<Object> list;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException  {
-		//obs³uga argumentów z linii komend
+		//obsÅ‚uga argumentÃ³w z linii komend
 		int bufferSize = 8192;
         boolean printStats = false;
         boolean useNaive = false;
         boolean useFastNIO = false;
         String kodowanie = "UTF-8"; //kodowanie  //US-ASCII
         int algo = 0; //algorytm wyszukiwania
-        int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
+        int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba wÄ…tkÃ³w taka jak liczba rdzenii
         
         // Opcje z linii komend
         int argumentsIndex = 0;
@@ -122,7 +133,7 @@ public class Gui extends JFrame {
         	}else if(useFastNIO){
         		algo=1;
         	}else{
-        		algo=0; //domyœlny
+        		algo=0; //domyÅ›lny
         	}
             //szukaj
         	Search.szukaj(fraza,folder,algo,threadsCount,bufferSize,kodowanie);
@@ -140,7 +151,7 @@ public class Gui extends JFrame {
         			}
         		});
         		//pomoc
-            	Search.pomoc();
+            	Search.printHelp();
             }
 		
 		
@@ -151,7 +162,7 @@ public class Gui extends JFrame {
 	 */
 	public Gui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 318);
+		setBounds(100, 100, 480, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -166,18 +177,23 @@ public class Gui extends JFrame {
 		JButton btnSzukaj = new JButton("Szukaj");
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//sprawdŸ czy podano wymagane opcje
+				//sprawdÅº czy podano wymagane opcje
 				if(textArea.getText().length() < 1)
-					JOptionPane.showMessageDialog(contentPane, "Proszê wybraæ folder który ma zostaæ przeszukany.");
+					JOptionPane.showMessageDialog(contentPane, "ProszÄ™ wybraÄ‡ folder ktÃ³ry ma zostaÄ‡ przeszukany.");
 				else if(textField.getText().length() < 1)
-					JOptionPane.showMessageDialog(contentPane, "Proszê wpisaæ frazê która ma zostaæ wyszukana.");
-				else{
+					JOptionPane.showMessageDialog(contentPane, "ProszÄ™ wpisaÄ‡ frazÄ™ ktÃ³ra ma zostaÄ‡ wyszukana.");
+				else
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
-				//dodaj statystyki
 				txtpnWyniki.setText(Search.s1.toString());
-				txtpnWyniki.setVisible(true); //poka¿
-				}
+				
+				list = new JList<>(Search.s2.toArray());
+				list.setBounds(23, 290, 431, 118);
+				contentPane.add(list);	
+				
+				contentPane.revalidate();
+				contentPane.repaint();
+				
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
 			}
@@ -200,11 +216,9 @@ public class Gui extends JFrame {
 		contentPane.add(lblKodowanie);
 		
 		txtpnWyniki = new JTextPane();
-		
-		txtpnWyniki.setText("statystyki");
+		//txtpnWyniki.setText("wyniki");
 		txtpnWyniki.setBounds(23, 150, 431, 118);
 		contentPane.add(txtpnWyniki);
-		txtpnWyniki.setVisible(false); //niewidzialne na pocz¹tku
 		
 		lblBufor = new JLabel("bufor");
 		lblBufor.setBounds(283, 122, 34, 14);
@@ -215,7 +229,8 @@ public class Gui extends JFrame {
 		comboBox_2.setBounds(315, 119, 60, 20);
 		contentPane.add(comboBox_2);
 		
-		
+		//String data[] = {"a","b","c"};
+	
 		
 		textArea = new JTextArea();
 		textArea.setBounds(70, 48, 267, 16);
@@ -228,7 +243,7 @@ public class Gui extends JFrame {
 		JButton btnDodajFolder = new JButton("Dodaj folder");
 		btnDodajFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//klikniêty
+				//klikniÄ™ty
 				 JFileChooser chooser = new JFileChooser();
 				    chooser.setCurrentDirectory(new java.io.File("."));
 				    chooser.setDialogTitle("choosertitle");
@@ -248,10 +263,10 @@ public class Gui extends JFrame {
 		contentPane.add(btnDodajFolder);
 		
 		comboBox_3 = new JComboBox();
-		//generuj listê do wybory w¹tków
-		int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w¹tków taka jak liczba rdzenii
+		//generuj listÄ™ do wybory wÄ…tkÃ³w
+		int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba wÄ…tkÃ³w taka jak liczba rdzenii
         Vector<Integer> comboBox3Items=new Vector();
-        for(int i=threadsCount; i>-1; i--){
+        for(int i=threadsCount; i>0; i--){
         	comboBox3Items.add(i);
         }
         final DefaultComboBoxModel model3 = new DefaultComboBoxModel(comboBox3Items);
@@ -262,5 +277,7 @@ public class Gui extends JFrame {
 		lblWtki = new JLabel("w\u0105tki");
 		lblWtki.setBounds(380, 122, 46, 14);
 		contentPane.add(lblWtki);
+		
+
 	}
 }
