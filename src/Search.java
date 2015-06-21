@@ -24,8 +24,9 @@ import java.util.LinkedList;
  *
  */
 public class Search {
-	public static StringBuilder s1 = new StringBuilder();
-    //gï¿½ï¿½wna funkcje programu szukajï¿½ca, do wywoï¿½ania z gui
+    
+    
+    //g³ówna funkcje programu szukaj¹ca, do wywo³ania z gui
     public static void szukaj(String fraza, String folder, int algo, int watki, int bufferSize, String kodowanie1){
     		Charset kodowanie = Charset.forName(kodowanie1); //kodowanie z argumentu
         
@@ -45,10 +46,10 @@ public class Search {
                 throw new IllegalArgumentException("Input should be directory");
             }
 
-            //do zwracania wynikï¿½w
+            //do zwracania wyników
             final TaskAcceptor<FileSearchBean> reporter = new TaskAcceptor<FileSearchBean>() {
                 public void push(FileSearchBean task) {
-                	//pokazywanie wynikï¿½w wyszukiwania:
+                	//pokazywanie wyników wyszukiwania:
                     System.out.println(task.getInputFile().toString());
                 }
 
@@ -67,11 +68,11 @@ public class Search {
             } else if (algo==1) {
                 taskExecutor = new KMPFileSearchTaskExecutorNIO(frazabytes, reporter, bufferSize);
             } else {
-            	//domyï¿½lnie algorytm KMP
+            	//domyœlnie algorytm KMP
                 taskExecutor = new KMPFileSearchTaskExecutor(frazabytes, reporter, bufferSize);
             }
 
-            // wykonanie wielowï¿½tkowe
+            // wykonanie wielow¹tkowe
             TaskAcceptor<FileSearchBean> taskAcceptor;
             final LinkedList<ExecutorThread<FileSearchBean>> threadPool = new LinkedList<ExecutorThread<FileSearchBean>>();
             if (watki > 0) {
@@ -113,18 +114,13 @@ public class Search {
             if (1==1) {
                 for (ExecutorThread<FileSearchBean> t : threadPool) {
                     TaskRunner tr = t.getTaskRunner();
-                    System.out.printf("Statystyki wï¿½tku '%s': przetworzone zadania: %d  czas: %d ms\n",
+                    System.out.printf("Statystyki w¹tku '%s': przetworzone zadania: %d  czas: %d ms\n",
                             t.getName(), tr.getTasksProcessed(), tr.getThreadUptime());
-                    
-                    s1.append(String.format("Statystyki wï¿½tku '%s': przetworzone zadania: %d  czas: %d ms\n",
-                            t.getName(), tr.getTasksProcessed(), tr.getThreadUptime()));
                     threadTimeTotal += tr.getThreadUptime();
                 }
                 final long filesPerSecond = timeSpend > 0 ? (int)(totalTaskProcessed*1000/timeSpend) : totalTaskProcessed;
-                System.out.printf("Czas wykonania: %d ms (czas wï¿½tku: %d ms), przetworzono plikï¿½w: %d\n" +
-                        "Prï¿½dkoï¿½ï¿½ wyszukiwania: %d plikï¿½w/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
-                s1.append(String.format("Czas wykonania: %d ms (czas wï¿½tku: %d ms), przetworzono plikï¿½w: %d\n" +
-                        "Prï¿½dkoï¿½ï¿½ wyszukiwania: %d plikï¿½w/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond));
+                System.out.printf("Czas wykonania: %d ms (czas w¹tku: %d ms), przetworzono plików: %d\n" +
+                        "Prêdkoœæ wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
             }
        
     }
