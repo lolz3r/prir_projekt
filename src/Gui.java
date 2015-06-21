@@ -65,7 +65,7 @@ public class Gui extends JFrame {
 	private JComboBox comboBox_3;
 	private JLabel lblWtki;
 	
-	private JList<Object> list;
+	private JList<Object> list = new JList<>(new Object[0]);;
 
 	/**
 	 * Launch the application.
@@ -167,7 +167,7 @@ public class Gui extends JFrame {
         		//pomoc
             	Search.pomoc();
             }
-		
+        
 		
 	}
 
@@ -190,6 +190,12 @@ public class Gui extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSzukaj = new JButton("Szukaj");
+		
+		JScrollPane scrollPane_1 = new JScrollPane(list);
+		scrollPane_1.setBounds(23, 290, 431, 118);
+		//list.setBounds(23, 290, 431, 118);
+		contentPane.add(scrollPane_1);
+		
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//sprawdź czy podano wymagane opcje
@@ -210,11 +216,12 @@ public class Gui extends JFrame {
 				txtpnWyniki.setText(Search.s1.toString());
 				//dodanie listy plików
 				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
-				list = new JList<>(Search.s2.toArray());
-				JScrollPane scrollPane_1 = new JScrollPane(list);
-				scrollPane_1.setBounds(23, 290, 431, 118);
-				//list.setBounds(23, 290, 431, 118);
-				contentPane.add(scrollPane_1);
+				
+				//list.setListData(new Object[0]);
+				list.setListData(Search.s2.toArray());
+				Search.s2.clear();
+				
+
 				//otwiera plik po 2 krotnym kliknięciu
 				MouseListener mouseListener = new MouseAdapter() {
 				      public void mouseClicked(MouseEvent mouseEvent) {
@@ -270,9 +277,7 @@ public class Gui extends JFrame {
 		contentPane.add(lblKodowanie);
 		
 		txtpnWyniki = new JTextPane();
-		//txtpnWyniki.setText("wyniki");
-		//txtpnWyniki.setBounds(23, 150, 431, 118);
-		//contentPane.add(txtpnWyniki);
+
 		JScrollPane scrollPane_2 = new JScrollPane(txtpnWyniki);
 		scrollPane_2.setBounds(23, 150, 431, 118);
 		contentPane.add(scrollPane_2);
@@ -285,8 +290,6 @@ public class Gui extends JFrame {
 		comboBox_2.setModel(new DefaultComboBoxModel(new Integer[] {8192, 32768, 16384, 4096, 2048, 1024, 512, 256, 128, 64, 32}));
 		comboBox_2.setBounds(315, 119, 60, 20);
 		contentPane.add(comboBox_2);
-		
-		//String data[] = {"a","b","c"};
 	
 		
 		textArea = new JTextArea();
