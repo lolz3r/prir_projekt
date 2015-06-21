@@ -2,15 +2,13 @@
 package main;
 
 import executor.TaskAcceptor;
-//import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.util.LinkedList;
 
 /**
- * Recursive file listing optimized for fast performance and less memory usage (maximum on Java6, it could be
- * optimized for Java7).
+ * Rekurencyjne wyszukuje pliki w katalogu i wszystkich podkatalogach
  */
 public class FileListing implements Runnable {
     //private final static Logger logger = Logger.getLogger(FileListing.class);
@@ -40,7 +38,7 @@ public class FileListing implements Runnable {
                         try {
                             taskQueue.push(new FileSearchBean(pathName));
                         } catch (InterruptedException e) {
-                            //logger.warn("File listing interrupted", e);
+                            //logger.warn("przewane, b³ad", e);
                             Thread.currentThread().interrupt();
                         }
                     }
@@ -49,11 +47,10 @@ public class FileListing implements Runnable {
             };
             while (directoryQueue.size() > 0) {
                 final File rootNode = directoryQueue.removeFirst();
-                //noinspection ResultOfMethodCallIgnored
                 rootNode.listFiles(fileTraversalFilter);
             }
         } finally {
-           // logger.info("Listing finished.");
+           // logger.info("zakoñczono wyszukiwanie.");
             taskQueue.signalEndOfData();
         }
     }

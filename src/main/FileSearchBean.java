@@ -6,7 +6,7 @@ import executor.Task;
 import java.io.File;
 
 /**
- * File-search task bean.
+ * Klasa reprezentuj¹ca wyszukiwany plik
  */
 public class FileSearchBean implements Task {
     private final File inputFile;
