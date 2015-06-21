@@ -160,7 +160,8 @@ public class Gui extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * 
+	 * Twórz gui!
 	 */
 	public Gui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
