@@ -1,8 +1,14 @@
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 
 //import javafx.scene.control.ComboBox;
+
+
+
+
+
 
 
 import javax.swing.JFrame;
@@ -29,6 +35,10 @@ import javax.swing.JTextArea;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Vector;
@@ -190,12 +200,38 @@ public class Gui extends JFrame {
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				txtpnWyniki.setText(Search.s1.toString());
 				//dodanie listy plików
-				JScrollPane scrollPane = new JScrollPane(); //scrollbar
+				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
 				list = new JList<>(Search.s2.toArray());
 				list.setBounds(23, 290, 431, 118);
-				scrollPane.setViewportView(list);
 				contentPane.add(list);	
-				
+				//otwiera plik po 2 krotnym kliknięciu
+				MouseListener mouseListener = new MouseAdapter() {
+				      public void mouseClicked(MouseEvent mouseEvent) {
+				        JList theList = (JList) mouseEvent.getSource();
+				        if (mouseEvent.getClickCount() == 2) {
+				          int index = theList.locationToIndex(mouseEvent.getPoint());
+				          if (index >= 0) {
+				            Object o = theList.getModel().getElementAt(index);
+				            System.out.println("Double-clicked on: " + o.toString());
+				            //otwórz plik
+				            try {
+								//Runtime.getRuntime().exec("\"" +o.toString() +"\"");
+				            	//String[] plik = new String[] {o.toString()};
+				            	//Runtime.getRuntime().exec(plik);
+				            	if (Desktop.isDesktopSupported()) {
+				            	    Desktop.getDesktop().edit(new File(o.toString()) );
+				            	}
+								//ProcessBuilder pb = new ProcessBuilder(o.toString());
+								//Process p = pb.start();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+				          }
+				        }
+				      }
+				    };
+				    list.addMouseListener(mouseListener); //dodaje
+				//odśwież
 				contentPane.revalidate();
 				contentPane.repaint();
 				//zmiana rozmiaru
