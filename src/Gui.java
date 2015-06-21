@@ -1,8 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.TextArea;
-
-import javafx.scene.control.ComboBox;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,10 +5,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -25,6 +16,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
