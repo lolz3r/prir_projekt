@@ -120,9 +120,9 @@ public class Search {
                     czaswatku += tr.getThreadUptime();
                 }
                 final long filesPerSecond = czasw > 0 ? (int)(przetworzonepliki*1000/czasw) : przetworzonepliki;
-                System.out.printf("Czas wykonania: %d ms (czas wątku: %d ms), przetworzono plików: %d\n" +
+                System.out.printf("Czas wykonania: %d ms (łączny czas wątków: %d ms)\nIlość przeszukanych plików: %d\n" +
                         "Prędkość wyszukiwania: %d plików/s\n", czasw, czaswatku, przetworzonepliki, filesPerSecond);
-                s1.append(String.format("Czas wykonania: %d ms (czas wątku: %d ms), przetworzono plików: %d\n" +
+                s1.append(String.format("Czas wykonania: %d ms (łączny czas wątków: %d ms)\nIlość przeszukanych plików: %d\n" +
                         "Prędkość wyszukiwania: %d plików/s\n", czasw, czaswatku, przetworzonepliki, filesPerSecond));
        
     }
