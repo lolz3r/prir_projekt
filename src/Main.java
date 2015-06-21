@@ -40,7 +40,7 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 
 
-public class Gui extends JFrame {
+public class Main extends JFrame {
 
 	/**
 	 * 
@@ -156,7 +156,7 @@ public class Gui extends JFrame {
         		EventQueue.invokeLater(new Runnable() {
         			public void run() {
         				try {
-        					Gui frame = new Gui();
+        					Main frame = new Main();
         					frame.setVisible(true);
         				} catch (Exception e) {
         					e.printStackTrace();
@@ -174,8 +174,8 @@ public class Gui extends JFrame {
 	 * 
 	 * Twórz gui!
 	 */
-	public Gui() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Gui.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+	public Main() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		setTitle("Wyszukiwarka tekstu w plikach - Projekt PRiR");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 495, 149);
@@ -386,12 +386,12 @@ public class Gui extends JFrame {
 				lblWtki.setVisible(true);
 			}
 		});
-		btnOpcje.setIcon(new ImageIcon(Gui.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
+		btnOpcje.setIcon(new ImageIcon(Main.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
 		btnOpcje.setBounds(193, 72, 107, 33);
 		contentPane.add(btnOpcje);
 		
 		btnPokaStatystyki = new JButton("Pokaż statystyki");
-		btnPokaStatystyki.setIcon(new ImageIcon(Gui.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
+		btnPokaStatystyki.setIcon(new ImageIcon(Main.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
 		btnPokaStatystyki.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnPokaStatystyki.setVisible(false);
