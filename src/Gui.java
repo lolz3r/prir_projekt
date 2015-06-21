@@ -2,8 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 
+<<<<<<< HEAD
 //import javafx.scene.control.ComboBox;
 
+=======
+>>>>>>> parent of 39567d4... gui dizała
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +21,6 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -29,7 +31,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Vector;
 
 
 public class Gui extends JFrame {
@@ -48,8 +49,6 @@ public class Gui extends JFrame {
 	private JTextPane txtpnWyniki;
 	private JLabel lblBufor;
 	private JComboBox comboBox_2;
-	private JComboBox comboBox_3;
-	private JLabel lblWtki;
 
 	/**
 	 * Launch the application.
@@ -60,9 +59,13 @@ public class Gui extends JFrame {
         boolean printStats = false;
         boolean useNaive = false;
         boolean useFastNIO = false;
+        int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w�tk�w taka jak liczba rdzenii
         String kodowanie = "UTF-8"; //kodowanie  //US-ASCII
         int algo = 0; //algorytm wyszukiwania
+<<<<<<< HEAD
         int threadsCount = Runtime.getRuntime().availableProcessors(); //liczba w�tk�w taka jak liczba rdzenii
+=======
+>>>>>>> parent of 39567d4... gui dizała
         
         // Opcje z linii komend
         int argumentsIndex = 0;
@@ -160,7 +163,7 @@ public class Gui extends JFrame {
 	 */
 	public Gui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 318);
+		setBounds(100, 100, 450, 318);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -168,13 +171,14 @@ public class Gui extends JFrame {
 		
 		textField = new JTextField();
 		textField.setToolTipText("Wpisz tekst do wyszukania");
-		textField.setBounds(23, 11, 314, 20);
+		textField.setBounds(23, 11, 269, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnSzukaj = new JButton("Szukaj");
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+<<<<<<< HEAD
 				//sprawd� czy podano wymagane opcje
 				if(textArea.getText().length() < 1)
 					JOptionPane.showMessageDialog(contentPane, "Prosz� wybra� folder kt�ry ma zosta� przeszukany.");
@@ -186,14 +190,18 @@ public class Gui extends JFrame {
 				txtpnWyniki.setText(Search.s1.toString());
 				//System.out.println("test: " + textField.getText()+textArea.getText()+comboBox_1.getSelectedIndex()+ (Integer) comboBox_2.getSelectedItem()+ (Integer) comboBox_2.getSelectedItem() + comboBox.getSelectedItem().toString());
 				
+=======
+				//uruchom szukanie
+				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), 8, (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
+>>>>>>> parent of 39567d4... gui dizała
 			}
 		});
-		btnSzukaj.setBounds(347, 10, 107, 23);
+		btnSzukaj.setBounds(302, 10, 107, 23);
 		contentPane.add(btnSzukaj);
 		
 		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"UTF-8", "cp1250", "US-ASCII", "UTF-16"}));
-		comboBox.setBounds(207, 119, 66, 20);
+		comboBox.setBounds(213, 119, 60, 20);
 		contentPane.add(comboBox);
 		
 		comboBox_1 = new JComboBox();
@@ -207,7 +215,7 @@ public class Gui extends JFrame {
 		
 		txtpnWyniki = new JTextPane();
 		txtpnWyniki.setText("wyniki");
-		txtpnWyniki.setBounds(23, 150, 431, 118);
+		txtpnWyniki.setBounds(23, 150, 386, 118);
 		contentPane.add(txtpnWyniki);
 		
 		lblBufor = new JLabel("bufor");
@@ -222,7 +230,7 @@ public class Gui extends JFrame {
 		
 		
 		textArea = new JTextArea();
-		textArea.setBounds(70, 48, 267, 16);
+		textArea.setBounds(70, 48, 222, 16);
 		contentPane.add(textArea);
 		
 		JLabel lblFolder = new JLabel("folder");
@@ -248,8 +256,9 @@ public class Gui extends JFrame {
 				    }
 			}
 		});
-		btnDodajFolder.setBounds(347, 44, 107, 23);
+		btnDodajFolder.setBounds(302, 44, 107, 23);
 		contentPane.add(btnDodajFolder);
+<<<<<<< HEAD
 		
 		comboBox_3 = new JComboBox();
 		//generuj list� do wybory w�tk�w
@@ -266,5 +275,7 @@ public class Gui extends JFrame {
 		lblWtki = new JLabel("w\u0105tki");
 		lblWtki.setBounds(380, 122, 46, 14);
 		contentPane.add(lblWtki);
+=======
+>>>>>>> parent of 39567d4... gui dizała
 	}
 }
