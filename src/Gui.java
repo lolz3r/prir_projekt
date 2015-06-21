@@ -12,6 +12,7 @@ import java.awt.TextArea;
 
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,6 +23,7 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
@@ -65,7 +67,7 @@ public class Gui extends JFrame {
 	private JComboBox comboBox_3;
 	private JLabel lblWtki;
 	
-	private JList<Object> list;
+	private JList<String> list;
 
 	/**
 	 * Launch the application.
@@ -202,16 +204,19 @@ public class Gui extends JFrame {
 				//usunięcie wcześniejszych wyników
 				Search.s1 = new StringBuilder();
 				Search.s2.clear();
-				//list.removeAll();
 				txtpnWyniki.setText("");
+				//dodanie listy plików
+				DefaultListModel<String> modelwyn = new DefaultListModel<>();
+				list = new JList<>(modelwyn);
 				
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				txtpnWyniki.setText(Search.s1.toString());
-				//dodanie listy plików
-				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
-				list = new JList<>(Search.s2.toArray());
-				list.removeAll(); //czyść
+				//dodanie wyników do listy
+				list.removeAll();
+				for(String wyn : Search.s2){
+					modelwyn.addElement(wyn);
+				}
 				list.setBounds(23, 290, 431, 118);
 				contentPane.add(list);	
 				//otwiera plik po 2 krotnym kliknięciu
