@@ -24,7 +24,7 @@ import java.util.LinkedList;
  *
  */
 public class Search {
-    
+	public static StringBuilder s1 = new StringBuilder(); //string na wyniki
     
     //g³ówna funkcje programu szukaj¹ca, do wywo³ania z gui
     public static void szukaj(String fraza, String folder, int algo, int watki, int bufferSize, String kodowanie1){
@@ -116,11 +116,15 @@ public class Search {
                     TaskRunner tr = t.getTaskRunner();
                     System.out.printf("Statystyki w¹tku '%s': przetworzone zadania: %d  czas: %d ms\n",
                             t.getName(), tr.getTasksProcessed(), tr.getThreadUptime());
+                    s1.append(String.format("Statystyki w¹tku '%s': przetworzone zadania: %d  czas: %d ms\n",
+                            t.getName(), tr.getTasksProcessed(), tr.getThreadUptime() )); //do statystyk
                     threadTimeTotal += tr.getThreadUptime();
                 }
                 final long filesPerSecond = timeSpend > 0 ? (int)(totalTaskProcessed*1000/timeSpend) : totalTaskProcessed;
                 System.out.printf("Czas wykonania: %d ms (czas w¹tku: %d ms), przetworzono plików: %d\n" +
                         "Prêdkoœæ wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond);
+                s1.append(String.format("Czas wykonania: %d ms (czas w¹tku: %d ms), przetworzono plików: %d\n" +
+                        "Prêdkoœæ wyszukiwania: %d plików/s\n", timeSpend, threadTimeTotal, totalTaskProcessed, filesPerSecond));
             }
        
     }
