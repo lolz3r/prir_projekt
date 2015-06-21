@@ -71,7 +71,7 @@ public class Gui extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException  {
-		//obsługa argumentów z linii komend
+		//obsługa argumentów z linii komend 
 		int bufferSize = 8192;
         boolean printStats = false;
         boolean useNaive = false;
