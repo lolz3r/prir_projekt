@@ -76,7 +76,6 @@ public class Gui extends JFrame {
 	private JLabel lblWtki;
 	
 	private JList<String> list;
-	private JList<Object> list = new JList<>(new Object[0]);;
 
 	/**
 	 * Uruchamianie
@@ -204,10 +203,6 @@ public class Gui extends JFrame {
 		JRootPane rootPane = SwingUtilities.getRootPane(btnSzukaj); 
 		//((JcontentPane.setDefaultButton(btnSzukaj);
 		
-		JScrollPane scrollPane_1 = new JScrollPane(list);
-		scrollPane_1.setBounds(23, 290, 431, 118);
-		//list.setBounds(23, 290, 431, 118);
-		contentPane.add(scrollPane_1);
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//sprawdź czy podano wymagane opcje
@@ -243,11 +238,6 @@ public class Gui extends JFrame {
 				scrollPane_1.setBounds(23, 290, 431, 118);
 				//list.setBounds(23, 290, 431, 118);
 				contentPane.add(scrollPane_1);
-				
-				//list.setListData(new Object[0]);
-				list.setListData(Search.s2.toArray());
-				Search.s2.clear();
-				
 
 				//otwiera plik po 2 krotnym kliknięciu
 				MouseListener mouseListener = new MouseAdapter() {
