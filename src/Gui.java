@@ -75,17 +75,14 @@ public class Gui extends JFrame {
 	private JComboBox comboBox_3;
 	private JLabel lblWtki;
 	
-<<<<<<< HEAD
 	private JList<String> list;
-=======
 	private JList<Object> list = new JList<>(new Object[0]);;
->>>>>>> origin/master
 
 	/**
-	 * Launch the application.
+	 * Uruchamianie
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException  {
-		//obsługa argumentów z linii komend 
+		//obsługa argumentów z linii komend
 		int bufferSize = 8192;
         boolean printStats = false;
         boolean useNaive = false;
@@ -181,7 +178,7 @@ public class Gui extends JFrame {
         		//pomoc
             	Search.pomoc();
             }
-        
+		
 		
 	}
 
@@ -204,17 +201,13 @@ public class Gui extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSzukaj = new JButton("Szukaj");
-<<<<<<< HEAD
 		JRootPane rootPane = SwingUtilities.getRootPane(btnSzukaj); 
-		rootPane.setDefaultButton(btnSzukaj);
-=======
+		//((JcontentPane.setDefaultButton(btnSzukaj);
 		
 		JScrollPane scrollPane_1 = new JScrollPane(list);
 		scrollPane_1.setBounds(23, 290, 431, 118);
 		//list.setBounds(23, 290, 431, 118);
 		contentPane.add(scrollPane_1);
-		
->>>>>>> origin/master
 		btnSzukaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//sprawdź czy podano wymagane opcje
@@ -245,19 +238,16 @@ public class Gui extends JFrame {
 
 				//dodanie listy plików
 				//JScrollPane scrollPane = new JScrollPane(); //scrollbar
-<<<<<<< HEAD
 				//list = new JList<>(Search.s2.toArray());
 				JScrollPane scrollPane_1 = new JScrollPane(list);
 				scrollPane_1.setBounds(23, 290, 431, 118);
 				//list.setBounds(23, 290, 431, 118);
 				contentPane.add(scrollPane_1);
-=======
 				
 				//list.setListData(new Object[0]);
 				list.setListData(Search.s2.toArray());
 				Search.s2.clear();
 				
->>>>>>> origin/master
 
 				//otwiera plik po 2 krotnym kliknięciu
 				MouseListener mouseListener = new MouseAdapter() {
@@ -314,7 +304,9 @@ public class Gui extends JFrame {
 		contentPane.add(lblKodowanie);
 		
 		txtpnWyniki = new JTextPane();
-
+		//txtpnWyniki.setText("wyniki");
+		//txtpnWyniki.setBounds(23, 150, 431, 118);
+		//contentPane.add(txtpnWyniki);
 		JScrollPane scrollPane_2 = new JScrollPane(txtpnWyniki);
 		scrollPane_2.setBounds(23, 150, 431, 118);
 		contentPane.add(scrollPane_2);
@@ -327,6 +319,8 @@ public class Gui extends JFrame {
 		comboBox_2.setModel(new DefaultComboBoxModel(new Integer[] {8192, 32768, 16384, 4096, 2048, 1024, 512, 256, 128, 64, 32}));
 		comboBox_2.setBounds(315, 119, 60, 20);
 		contentPane.add(comboBox_2);
+		
+		//String data[] = {"a","b","c"};
 	
 		
 		textArea = new JTextArea();
