@@ -4,6 +4,7 @@ import java.awt.TextArea;
 
 //import javafx.scene.control.ComboBox;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +20,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -186,9 +188,11 @@ public class Gui extends JFrame {
 				//uruchom szukanie
 				Search.szukaj(textField.getText(), textArea.getText(), comboBox_1.getSelectedIndex(), (Integer) comboBox_3.getSelectedItem(), (Integer) comboBox_2.getSelectedItem(), comboBox.getSelectedItem().toString());
 				txtpnWyniki.setText(Search.s1.toString());
-				
+				//dodanie listy plików
+				JScrollPane scrollPane = new JScrollPane(); //scrollbar
 				list = new JList<>(Search.s2.toArray());
 				list.setBounds(23, 290, 431, 118);
+				scrollPane.setViewportView(list);
 				contentPane.add(list);	
 				
 				contentPane.revalidate();
